@@ -64,22 +64,18 @@ import { useRouter } from "vue-router"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { auth } from "@/firebaseConfig"
-import { validateEmail, validatePassword } from "@/utils/validation"
+import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter()
 const email = ref("")
 const password = ref("")
 const errorMessage = ref("")
+const userStore = useUserStore()
 
 watch([email, password], () => errorMessage.value = "")
 
 const login = () => {
     errorMessage.value = ""
-
-    errorMessage.value = validateEmail(email.value)
-    if (errorMessage.value) return
-    errorMessage.value = validatePassword(password.value)
-    if (errorMessage.value) return
 
     signInWithEmailAndPassword(auth, email.value, password.value)
         .then(async ({ user }) => {
@@ -91,7 +87,8 @@ const login = () => {
                 throw new Error("Error: Cannot get user data. Please try again or contact the administrator.")
             }
             const userData = userDoc.data()
-            localStorage.setItem('user', JSON.stringify(userData))
+            userStore.saveUser(userData)
+
             router.push("/")
         }).catch(error => errorMessage.value = error.message)
 }
