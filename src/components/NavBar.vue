@@ -5,19 +5,16 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="mynavbar">
+            <div class="collapse navbar-collapse mx-3" id="mynavbar">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li class="nav-item px-2">
+                        <RouterLink class="nav-link" :to="{ name: 'home' }">Home</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li class="nav-item px-2">
+                        <RouterLink class="nav-link" :to="{ name: 'restaurants' }">Restaurant List</RouterLink>
                     </li>
                 </ul>
-                <form class="d-flex mx-3">
+                <form class="d-flex px-2">
                     <button @click="switchState" class="nav-link">{{ user ? 'Logout' : 'Login' }}</button>
                 </form>
             </div>

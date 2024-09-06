@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref(localStorage.getItem('user'))
+  const user = ref(JSON.parse(localStorage.getItem('user')))
 
   const saveUser = (newUser) => {
     if (newUser) {
