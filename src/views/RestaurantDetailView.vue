@@ -15,7 +15,7 @@
                                 <div class="mb-3">
                                     <label for="rating" class="form-label">Set New Rating</label>
                                     <input v-model="newRating" type="number" class="form-control" min="1" max="5"
-                                        required>
+                                        required placeholder="1-5">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -30,11 +30,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { doc, getDoc, updateDoc, getFirestore } from 'firebase/firestore'
 import { useUserStore } from '@/stores/userStore';
 import NavBar from '@/components/NavBar.vue';
 
+const router = useRouter()
 const { user } = useUserStore()
 
 const db = getFirestore()
@@ -53,7 +54,7 @@ const updateRating = async () => {
     await updateDoc(doc(db, 'restaurants', params.id), {
         rating: Number(newRating.value)
     })
-    fetchRestaurant()
+    router.push({ name: 'restaurants' })
 }
 
 onMounted(() => {
@@ -61,3 +62,9 @@ onMounted(() => {
 })
 
 </script>
+
+<style scoped>
+input::placeholder {
+    color: #ccc;
+}
+</style>

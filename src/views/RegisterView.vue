@@ -12,7 +12,7 @@
                                 </a>
                             </div> -->
                             <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Create a new account</h2>
-                            <form @submit.prevent="login">
+                            <form @submit.prevent="register">
                                 <div class="row gy-2 overflow-hidden">
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
