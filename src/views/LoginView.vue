@@ -62,9 +62,9 @@
 import { ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore"
 import { auth } from "@/firebaseConfig"
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/stores/userStore"
 
 const router = useRouter()
 const email = ref("")
@@ -90,6 +90,24 @@ const login = () => {
             userStore.saveUser(userData)
 
             router.push("/")
-        }).catch(error => errorMessage.value = error.message)
+        }).catch(error => {
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    errorMessage.value = "No user found with this email."
+                    break
+                case 'auth/wrong-password':
+                    errorMessage.value = "Incorrect password."
+                    break
+                case 'auth/invalid-email':
+                    errorMessage.value = "Invalid email address."
+                    break
+                case 'auth/invalid-credential':
+                    errorMessage.value = "Invalid username or password."
+                    break
+                default:
+                    errorMessage.value = "Login failed. Please try again."
+                    console.log(error.code)
+            }
+        })
 }
 </script>

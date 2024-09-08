@@ -72,7 +72,7 @@
 import { ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { createUserWithEmailAndPassword } from "firebase/auth"
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc } from "firebase/firestore"
 import { auth } from "@/firebaseConfig"
 import { validateEmail, validatePassword } from "@/utils/validation"
 
@@ -101,6 +101,21 @@ const register = () => {
             })
             alert("Congratulations, You have successfully registered!")
             router.push("/login")
-        }).catch(error => errorMessage.value = error.message)
+        }).catch(error => {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    errorMessage.value = "This email is already registered."
+                    break
+                case 'auth/invalid-email':
+                    errorMessage.value = "Invalid email address."
+                    break
+                case 'auth/weak-password':
+                    errorMessage.value = "Password should be at least 6 characters."
+                    break
+                default:
+                    errorMessage.value = "Registration failed. Please try again."
+                    console.log(error.code)
+            }
+        })
 }
 </script>
