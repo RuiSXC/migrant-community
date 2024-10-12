@@ -1,5 +1,5 @@
 <template>
-    <div class="card my-3">
+    <div id="map-panel" class="card my-3">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6">
@@ -23,7 +23,14 @@
 
     <div v-if="place" class="card my-3 p-3">
         <div class="card-header">
-            <RestaurantCard :place="place" :avgRating="avgRating" />
+            <RestaurantCard :place="place" :avgRating="avgRating">
+                <!-- control pannel -->
+                <div class="mt-3">
+                    <a @click="() => mapRef.route(place)" href="#map-panel" class="btn btn-primary btn-sm me-2">
+                        <i class="bi bi-cursor-fill"></i> Get Directions
+                    </a>
+                </div>
+            </RestaurantCard>
         </div>
         <Comment :placeId="place.place_id" v-model="comments" />
     </div>
@@ -71,6 +78,7 @@ onMounted(async () => {
     // Relocate when user selects a place
     autocomplete.addListener('place_changed', () => {
         place.value = autocomplete.getPlace();
+        console.log(place.value);
         mapRef.value.locate(place.value);
     });
 });

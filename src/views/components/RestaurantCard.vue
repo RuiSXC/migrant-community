@@ -11,6 +11,7 @@
             <p class="text-muted">Call: {{ place.international_phone_number }}</p>
             <p class="text-muted">Website: {{ place.website }}</p>
             <p class="text-muted">Average Rating: {{ avgRating || 'no rating' }}</p>
+            <slot></slot>
         </div>
     </div>
 </template>

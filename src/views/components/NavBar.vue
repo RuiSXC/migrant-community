@@ -34,7 +34,6 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const handleLogout = async () => {
-  console.log("logout");
   authStore.logout()
     .then(() => router.push({ name: 'login' }))
     .catch((error) => console.log(error));

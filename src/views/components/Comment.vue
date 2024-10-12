@@ -16,7 +16,7 @@
             <small class="text-muted small">{{ comment.createdAt?.toLocaleString() }}</small>
         </div>
     </div>
-    <div v-else class="alert alert-info mt-5">No comments yet. Come on, leave the first comment!</div>
+    <div v-else class="alert alert-info mt-5">No comments yet. &emsp; Come on, leave the first comment ...</div>
 
     <hr class="my-4" />
 
@@ -68,7 +68,6 @@ onMounted(() => updateComments(props.placeId));
 const emit = defineEmits(['update:modelValue']);
 const updateComments = async (placeId) => {
     props.modelValue.value = await fetchComments(placeId);
-    console.log("@modelValue: ", props.modelValue)
     emit('update:modelValue', props.modelValue.value);
 }
 
