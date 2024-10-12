@@ -3,11 +3,33 @@ import { useAuthStore } from '@/stores/auth';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
+import Restaurant from '@/views/Restaurant.vue';
 
 const routes = [
-  { path: '/', name: 'home', component: Home, meta: { requiresAuth: true } },
-  { path: '/login', name: 'login', component: Login, meta: { showNavBar: false } },
-  { path: '/register', name: 'register', component: Register, meta: { showNavBar: false } },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: { showNavBar: false } 
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: { showNavBar: false }
+  },
+  { 
+    path: '/',
+    name: 'home',
+    component: Home,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/restaurant',
+    name: 'restaurant',
+    component: Restaurant,
+    meta: { requiresAuth: true }
+  }
 ];
 
 const router = createRouter({

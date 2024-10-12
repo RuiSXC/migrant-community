@@ -1,6 +1,8 @@
 <template>
   <NavBar v-if="showNavBar"/>
-  <router-view />
+  <div class="container">
+    <router-view />
+  </div>
 </template>
 
 <script setup>

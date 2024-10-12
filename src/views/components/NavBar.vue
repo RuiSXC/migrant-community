@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand mx-2" href="#">
-            <img src="@/assets/images/logo.svg" width="50" height="50" alt="Logo">
+        <a class="navbar-brand mx-sm-5" href="#">
+            <img src="@/assets/images/logo.png" height="50" alt="Logo">
         </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
               <span class="navbar-toggler-icon"></span>
@@ -10,10 +10,10 @@
           <div class="collapse navbar-collapse" id="mynavbar">
               <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Link</a>
+                      <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Link</a>
+                      <router-link :to="{ name: 'restaurant' }" class="nav-link">Restaurant</router-link>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="#">Link</a>
