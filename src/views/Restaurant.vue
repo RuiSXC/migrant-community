@@ -20,15 +20,25 @@
             <GoogleMap ref="mapRef" />
         </div>
     </div>
+
+    <div v-if="place" class="card my-3 p-3">
+        <div class="card-header">
+            <!-- todo: restaurant detail -->
+            <h3>Comments and ratings</h3>
+        </div>
+        <Comment :placeId="place.place_id"/>
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
 import GoogleMap from '@/components/GoogleMap.vue';
+import Comment from './components/Comment.vue';
 
 const searchInputDom = ref(null);
 const mapRef = ref(null);
+const place = ref(null);
 let autocomplete = null;
 
 const loader = new Loader({
@@ -57,8 +67,8 @@ onMounted(async () => {
 
     // Relocate when user selects a place
     autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        mapRef.value.locate(place);
+        place.value = autocomplete.getPlace();
+        mapRef.value.locate(place.value);
     });
 });
 </script>
