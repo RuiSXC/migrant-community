@@ -1,4 +1,4 @@
-import {collection, addDoc, getDocs, getFirestore } from 'firebase/firestore';
+import {collection, addDoc, getDocs, getFirestore, Timestamp } from 'firebase/firestore';
 import { useAuthStore } from '@/stores/auth';
 
 const db = getFirestore();
@@ -7,7 +7,7 @@ const fetchComments = async (placeId) => {
     const querySnapshot = await getDocs(collection(db, 'comments'));
     const comments = querySnapshot.docs
         .filter(doc => doc.data().placeId === placeId)
-        .map(doc => ({ id: doc.id, ...doc.data() }));
+        .map(doc => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt.toDate() }));
     return comments;
 };
 
@@ -28,7 +28,7 @@ const postComment = async (placeId, rating, comment) => {
         userId: user.email, // Example user ID, replace with actual user ID
         rating: Number(rating),
         content: comment,
-        createdAt: new Date()
+        createdAt: Timestamp.now()
     })
 };
 

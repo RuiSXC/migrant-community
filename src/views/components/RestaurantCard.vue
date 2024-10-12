@@ -1,6 +1,6 @@
 <template>
     <div class="row ">
-        <div class="col-md-6 order-md-2 p-3 text-end">
+        <div class="col-md-6 order-md-2 text-md-end p-3">
             <img :src="place.photos[0].getUrl()" class="img-fluid mw-100" style="max-height: 20rem"
                 alt="the photo of the place" />
         </div>

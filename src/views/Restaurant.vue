@@ -23,23 +23,26 @@
 
     <div v-if="place" class="card my-3 p-3">
         <div class="card-header">
-            <!-- todo: restaurant detail -->
-            <h3>Comments and ratings</h3>
+            <RestaurantCard :place="place" :avgRating="avgRating" />
         </div>
-        <Comment :placeId="place.place_id"/>
+        <Comment :placeId="place.place_id" v-model="comments" />
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
 import GoogleMap from '@/components/GoogleMap.vue';
 import Comment from './components/Comment.vue';
+import RestaurantCard from './components/RestaurantCard.vue';
 
 const searchInputDom = ref(null);
 const mapRef = ref(null);
 const place = ref(null);
+const comments = ref([]);
 let autocomplete = null;
+
+const avgRating = computed(() => (Math.floor(comments.value.reduce((acc, comment) => acc + comment.rating, 0) / comments.value.length) || 0))
 
 const loader = new Loader({
     apiKey: 'AIzaSyCSyP5_jP1x0ddEmPIHwC2MPZ18Rb84tv0', // the google map api key

@@ -68,13 +68,13 @@ const locate = (place) => {
 
     destMarker.addListener('click', () => {
         const contentString = `
-            <div>
+            <div style="max-width: 20rem;">
                 <h5>${place.name}</h5>
                 <p class="text-muted">${place.vicinity}</p>
                 <img
                     src="${place.photos[0].getUrl()}"
                     alt="${place.name}"
-                    style="max-width: 15rem;"
+                    style="max-width: 100%"
                 />
             </div>
         `;

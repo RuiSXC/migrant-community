@@ -1,13 +1,10 @@
 <template>
     <!-- Comments -->
-    <div class="card mt-3" v-for="comment in comments" :key="comment.id">
+    <div v-if="modelValue.length > 0" class="card mt-3" v-for="comment in modelValue" :key="comment.id">
         <div class="card-body">
-            <p>{{ comment.content }}</p>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mb-1">
                 <div class="d-flex flex-row align-items-center">
-                    <!-- todo: avatar -->
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
-                        width="25" height="25" />
+                    <i class="bi bi-person-circle"></i>
                     <p class="small mb-0 ms-2">{{ comment.userId }}</p>
                 </div>
                 <div class="d-flex align-items-center ms-auto">
@@ -15,15 +12,17 @@
                     <StarRating v-model="comment.rating" />
                 </div>
             </div>
+            <p>{{ comment.content }}</p>
+            <small class="text-muted small">{{ comment.createdAt?.toLocaleString() }}</small>
         </div>
     </div>
+    <div v-else class="alert alert-info mt-5">No comments yet. Come on, leave the first comment!</div>
 
-    <hr class="my-5" />
+    <hr class="my-4" />
 
     <form @submit.prevent="submitComment" data-mdb-input-init class="form-outline">
         <div class="d-flex flex-row align-items-center p-2">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar"
-                width="25" height="25" />
+            <i class="bi bi-person-circle"></i>
             <p class="small mb-0 ms-2">{{ user.email }}</p>
             <div class="d-flex align-items-center ms-auto">
                 <label class="mb-0 mx-2 text-muted">Your rating:</label>
@@ -45,11 +44,14 @@ import { fetchComments, postComment } from '@/stores/comment';
 import StarRating from '@/components/StarRating.vue';
 
 const { user } = useAuthStore();
-const comments = ref([]);
 const newRating = ref(0);
 const newComment = ref("");
 
 const props = defineProps({
+    modelValue: {
+        type: Array,
+        default: [],
+    },
     placeId: {
         type: String,
         required: true,
@@ -63,7 +65,12 @@ watch(() => props.placeId, newPlaceId => updateComments(newPlaceId));
 onMounted(() => updateComments(props.placeId));
 
 // function to update comments based on placeId
-const updateComments = async (placeId) => comments.value = await fetchComments(placeId);
+const emit = defineEmits(['update:modelValue']);
+const updateComments = async (placeId) => {
+    props.modelValue.value = await fetchComments(placeId);
+    console.log("@modelValue: ", props.modelValue)
+    emit('update:modelValue', props.modelValue.value);
+}
 
 // function to submit comment
 const submitComment = async () => {
@@ -77,7 +84,6 @@ const submitComment = async () => {
             alert(error);
         });
 }
-
 </script>
 
 
