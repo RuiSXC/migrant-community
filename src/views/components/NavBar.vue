@@ -16,7 +16,7 @@
                       <router-link :to="{ name: 'restaurant' }" class="nav-link">Restaurant</router-link>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Link</a>
+                    <router-link :to="{ name: 'safety-insight' }" class="nav-link">Safety Insight</router-link>
                   </li>
               </ul>
               <button @click="handleLogout" class="nav-link">Logout</button>
@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 

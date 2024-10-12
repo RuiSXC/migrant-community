@@ -29,6 +29,15 @@
                     <a @click="() => mapRef.route(place)" href="#map-panel" class="btn btn-primary btn-sm me-2">
                         <i class="bi bi-cursor-fill"></i> Get Directions
                     </a>
+                    <router-link v-if="place.localGovernmentArea && place.suburbTownName" class="btn btn-outline-danger btn-sm me-2" :to="{
+                            name: 'safety-insight',
+                            query: {
+                                localGovernmentArea: place.localGovernmentArea,
+                                suburbTownName: place.suburbTownName
+                            }
+                        }">
+                        <i class="bi bi-shield-fill-exclamation"></i> Safety insight
+                    </router-link>
                 </div>
             </RestaurantCard>
         </div>
@@ -77,9 +86,16 @@ onMounted(async () => {
 
     // Relocate when user selects a place
     autocomplete.addListener('place_changed', () => {
-        place.value = autocomplete.getPlace();
-        console.log(place.value);
-        mapRef.value.locate(place.value);
+        let placeinfo = autocomplete.getPlace();
+        for (const component of placeinfo.address_components) {
+            if (component.types.includes("administrative_area_level_2")) {
+                placeinfo.localGovernmentArea = component.short_name;
+            } else if (component.types.includes("locality")) {
+                placeinfo.suburbTownName = component.short_name;
+            }
+        }
+        place.value = placeinfo;
+        mapRef.value.locate(place.value );
     });
 });
 </script>
