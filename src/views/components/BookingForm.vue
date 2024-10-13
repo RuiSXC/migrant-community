@@ -29,7 +29,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
-import { postBooking, sendBookingEmail } from '@/stores/reservation';
+import { postBooking } from '@/stores/reservation';
 
 const form = ref({
     name: '',

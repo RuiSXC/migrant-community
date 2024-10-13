@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { auth } from '@/firebase';
+import { getFirestore, doc, getDoc } from "firebase/firestore"; 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '@/firebase';
 
+const db = getFirestore();
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
@@ -15,6 +17,15 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     user.value = userCredential.user;
+
+    // get additional user info
+    const userDocRef = doc(db, "users", user.value.uid);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      return { user: user.value, ...userData };
+    }
   };
 
   const logout = async () => {
