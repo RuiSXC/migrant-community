@@ -21,6 +21,9 @@
                   <li class="nav-item">
                       <router-link :to="{ name: 'reservation' }" class="nav-link">Reservation</router-link>
                   </li>
+                  <li v-if="user.role === 'admin'" class="nav-item">
+                      <router-link :to="{ name: 'admin' }" class="nav-link">Admin</router-link>
+                  </li>
               </ul>
               <button @click="handleLogout" class="nav-link">Logout</button>
           </div>
@@ -34,6 +37,7 @@ import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const user = authStore.user
 
 const handleLogout = async () => {
   authStore.logout()

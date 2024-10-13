@@ -24,7 +24,10 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
-      return { user: user.value, ...userData };
+      user.value = {
+          ...user.value,
+          ...userData,
+      };
     }
   };
 
