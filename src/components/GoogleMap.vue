@@ -78,8 +78,17 @@ const locate = (place) => {
     destMarker.addListener('click', () => {
         const contentString = `
             <div style="max-width: 20rem;">
-                <h5>${place.name}</h5>
-                <p class="text-muted">${place.vicinity}</p>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h5>${place.name}</h5>
+                        <p class="text-muted">${place.vicinity}</p>
+                    </div>
+                    <div class="col-sm-2 py-2">
+                        <button id="btnRoute" class="btn btn-outline-primary btn-sm rounded-circle">
+                            <i class="bi bi-cursor-fill"></i>
+                        </button>
+                    </div>
+                </div>
                 <img
                     src="${place.photos[0].getUrl()}"
                     alt="${place.name}"
@@ -89,6 +98,16 @@ const locate = (place) => {
         `;
         infoWindow.setContent(contentString);
         infoWindow.open(googleMap, destMarker);
+
+        // Add a click event listener to the info window
+        google.maps.event.addListenerOnce(infoWindow, 'domready', () => {
+            const goButton = document.getElementById('btnRoute');
+            if (goButton) {
+                goButton.addEventListener('click', () => {
+                    route(place);
+                });
+            }
+        });
     });
 };
 

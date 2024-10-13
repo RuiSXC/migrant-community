@@ -2,10 +2,11 @@
     <div id="map-panel" class="card my-3">
         <div class="card-header">
             <div class="row">
+                <h3>Your Culinary Journey: Search, Review, and Book Restaurants</h3>
                 <div class="col-md-6">
-                    <h3>Restaurants with ratings</h3>
+                    Welcome to restaurant channel! Here, you can easily find restaurants, reservation, plan route and insight into safety information. Have a good journey. Explore now!
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 d-flex flex-column justify-content-end mt-2">
                     <div class="input-group">
                         <input ref="searchInputDom" type="text" class="form-control"
                             placeholder="Enter restaurant's name" />
