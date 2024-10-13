@@ -9,7 +9,7 @@
                 </div>
                 <div class="d-flex align-items-center ms-auto">
                     <label class="mb-0 mx-2 text-muted">Rating:</label>
-                    <StarRating v-model="comment.rating" />
+                    <el-rate v-model="comment.rating" allow-half disabled/>
                 </div>
             </div>
             <p>{{ comment.content }}</p>
@@ -26,7 +26,7 @@
             <p class="small mb-0 ms-2">{{ user.email }}</p>
             <div class="d-flex align-items-center ms-auto">
                 <label class="mb-0 mx-2 text-muted">Your rating:</label>
-                <StarRating v-model="newRating" required />
+                <el-rate v-model="newRating" allow-half/>
             </div>
         </div>
         <input v-model="newComment" type="text" class="form-control" placeholder="Type comment..."
@@ -41,7 +41,6 @@
 import { ref, onMounted, defineProps, watch } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { fetchComments, postComment } from '@/stores/comment';
-import StarRating from '@/components/StarRating.vue';
 
 const { user } = useAuthStore();
 const newRating = ref(0);
