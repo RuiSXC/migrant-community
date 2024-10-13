@@ -1,14 +1,19 @@
 <template>
     <div class="row my-3 p-3 bg-light">
         <div class="col-md-6">
-            <h3>Safety Insight</h3>
+            <h3>
+                Safety Insight
+                <button @click="exportExcel" class="btn btn-outline-success btn-sm ms-2" title="Export to Excel">
+                    <i class="bi bi-download"></i>
+                </button>
+            </h3>
             <p class="text-muted">
                 You can customize their data view through multiple filtering and searching options, including filtering
                 by year and searching by local government area and suburb name.
             </p>
         </div>
 
-        <!-- 搜索和过滤区域 -->
+        <!-- Search and Filter -->
         <div class="col-md-6 d-flex flex-column justify-content-end filter-container gap-2">
             <el-input v-model="filters.localGovernmentArea" placeholder="Search by Local Government Area" clearable
                 @clear="() => filters.localGovernmentArea = ''"></el-input>
@@ -21,7 +26,7 @@
     </div>
 
     <div>
-        <!-- 表格 -->
+        <!-- Table -->
         <el-table :data="paginatedData" stripe border style="width: 100%" @sort-change="handleSortChange">
             <el-table-column prop="year" label="Year" width="180" sortable="custom"></el-table-column>
             <el-table-column prop="localGovernmentArea" label="Local Government Area" width="200"></el-table-column>
@@ -30,8 +35,8 @@
             <el-table-column prop="offenceCount" label="Offence Count" sortable="custom"></el-table-column>
         </el-table>
 
-        <!-- 分页 -->
-        <el-pagination v-model:current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+        <!-- Pagination -->
+        <el-pagination v-model:current-page="currentPage" :page-size="pageSize" :total="filteredData.length" :pager-count="5"
             layout="total, prev, pager, next" @current-change="handlePageChange" class="py-1"></el-pagination>
     </div>
 </template>
@@ -39,38 +44,32 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router'; // 导入 useRoute
+import * as XLSX from 'xlsx';
 import offences from '@/assets/json/offences.json'; // 假设 offences.json 在 src/assets 目录下
 
-// 定义筛选条件
+// define the filters
 const filters = ref({
     localGovernmentArea: '',
     suburbTownName: '',
     year: null,
 });
 
-// 当前页和每页显示的条数
+// the numbers of the current page and page size
 const currentPage = ref(1);
 const pageSize = ref(10);
 
-// 排序设置
+// define the sort config
 const sortConfig = ref({
     prop: null,
     order: null,
 });
 
-// 处理排序变化
+// handle sort change
 const handleSortChange = ({ prop, order }) => {
     sortConfig.value = { prop, order };
 };
 
-// 清除所有过滤条件
-const clearFilters = () => {
-    filters.value.localGovernmentArea = '';
-    filters.value.suburbTownName = '';
-    filters.value.year = null;
-};
-
-// 根据filters进行数据筛选
+// filter data based on filters
 const filteredData = computed(() => {
     return offences.filter((offence) => {
         const matchesLGA =
@@ -90,7 +89,7 @@ const filteredData = computed(() => {
     });
 });
 
-// 处理分页数据
+// get paginated data
 const paginatedData = computed(() => {
     let sortedData = [...filteredData.value];
 
@@ -110,27 +109,34 @@ const paginatedData = computed(() => {
         });
     }
 
-    // 分页
     const start = (currentPage.value - 1) * pageSize.value;
     const end = start + pageSize.value;
     return sortedData.slice(start, end);
 });
 
-// 处理页码变化
+// handle page change
 const handlePageChange = (newPage) => {
     currentPage.value = newPage;
 };
 
-// 获取所有不重复的年份
+// get unique years
 const uniqueYears = computed(() => {
     const years = offences.map((offence) => offence.year);
     return [...new Set(years)].sort((a, b) => b - a);
 });
 
-// 获取路由参数
-const route = useRoute();
+// export to excel
+const exportExcel = () => {
+  const worksheet = XLSX.utils.json_to_sheet(filteredData.value);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Offences Data");
+  XLSX.writeFile(workbook, "offences_data.xlsx");
+};
+
+
 
 // 在组件挂载时应用查询参数
+const route = useRoute();
 onMounted(() => {
     const { localGovernmentArea, suburbTownName, year } = route.query;
 
