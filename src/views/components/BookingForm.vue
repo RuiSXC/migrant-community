@@ -64,16 +64,10 @@ const formRef = ref(null);
 
 const onSubmit = () => {
     formRef.value.validate(async (valid) => {
-        try {
-            if (!valid) throw new Error('Please correct the form.');
-            await postBooking(form.value);
-            await sendBookingEmail(form.value);
-            ElMessage.success('Booking created successfully!');
-        }
-        catch (error) {
-            console.error(error);
-            ElMessage.error(error.message);
-        }
+        if (!valid) return ElMessage.error('Please correct the form.');
+        postBooking(form.value)
+            .then(() => ElMessage.success('Booking created successfully!'))
+            .catch((error) => ElMessage.error(error.message));
     });
 };
 
