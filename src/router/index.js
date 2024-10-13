@@ -6,6 +6,7 @@ import Home from '@/views/Home.vue';
 import Restaurant from '@/views/Restaurant.vue';
 import Reservation from '@/views/Reservation.vue';
 import SafetyInsight from '@/views/SafetyInsight.vue';
+import MapAnimation from '@/views/MapAnimation.vue';
 import Admin from '@/views/Admin.vue';
 
 const routes = [
@@ -42,6 +43,12 @@ const routes = [
     path: '/safety-insight',
     name: 'safety-insight',
     component: SafetyInsight,
+    meta: { requireRole: 'user' }
+  },
+  {
+    path: '/immigration',
+    name: 'immigration',
+    component: MapAnimation,
     meta: { requireRole: 'user' }
   },
   {

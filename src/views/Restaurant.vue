@@ -1,6 +1,6 @@
 <template>
     <div id="map-panel" class="card my-3">
-        <div class="card-header">
+        <div class="card-header" style="background-color: rgba(64,158, 155)">
             <div class="row">
                 <h3>Your Culinary Journey: Search, Review, and Book Restaurants</h3>
                 <div class="col-md-6">

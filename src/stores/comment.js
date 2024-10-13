@@ -11,6 +11,23 @@ const fetchComments = async (placeId) => {
     return comments;
 };
 
+const fetchAllComments = async () => {
+    const snapshot = await db.collection('comments').get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+const deleteComment = async (id) => {
+    await db.collection('comments').doc(id).delete();
+};
+
+const saveComment = async (comment) => {
+    if (comment.id) {
+        await db.collection('comments').doc(user.id).update(comment);
+    } else {
+        await db.collection('comments').add(comment);
+    }
+}
+
 /** 
  * Submit a new comment. 
  * @param placeId: number
@@ -34,5 +51,8 @@ const postComment = async (placeId, rating, comment) => {
 
 export {
     fetchComments,
-    postComment
+    fetchAllComments,
+    deleteComment,
+    postComment,
+    saveComment,
 };

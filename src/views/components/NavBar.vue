@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-primary" style="background-color: rgba(64,158, 255)">
       <div class="container-fluid">
-        <a class="navbar-brand mx-sm-5" href="#">
+        <a class="navbar-brand me-sm-5" href="#">
             <img src="@/assets/images/logo.png" height="50" alt="Logo">
         </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -20,6 +20,9 @@
                   </li>
                   <li class="nav-item">
                       <router-link :to="{ name: 'reservation' }" class="nav-link">Reservation</router-link>
+                  </li>
+                  <li class="nav-item">
+                      <router-link :to="{ name: 'immigration' }" class="nav-link">Immigration</router-link>
                   </li>
                   <li v-if="user.role === 'admin'" class="nav-item">
                       <router-link :to="{ name: 'admin' }" class="nav-link">Admin</router-link>

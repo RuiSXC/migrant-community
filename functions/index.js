@@ -6,7 +6,7 @@ const email = require("./email");
 admin.initializeApp();
 const db = admin.firestore();
 
-exports.capitalizeBookData = functions.auth
+exports.onUserCreated = functions.auth
     .user().onCreate(async (user) => {
       const uid = user.uid;
       const email = user.email;
@@ -26,7 +26,7 @@ exports.onUserFirestoreDeleted = functions.firestore
       await admin.auth().deleteUser(userId);
     });
 
-exports.capitalizeBookData = functions.firestore
+exports.onBookingCreated = functions.firestore
     .document("bookings/{bookingId}")
     .onCreate((snap, context) => {
       const bookingDetails = snap.data();

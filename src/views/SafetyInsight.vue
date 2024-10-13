@@ -27,7 +27,7 @@
 
     <div>
         <!-- Table -->
-        <el-table :data="paginatedData" stripe border style="width: 100%" @sort-change="handleSortChange">
+        <el-table :data="paginatedData" :header-cell-style="{background: 'rgba(64, 158, 255) !important', color: 'white !important'}" stripe border style="width: 100%" @sort-change="handleSortChange">
             <el-table-column prop="year" label="Year" width="180" sortable="custom"></el-table-column>
             <el-table-column prop="localGovernmentArea" label="Local Government Area" width="200"></el-table-column>
             <el-table-column prop="postcode" label="Postcode" width="150"></el-table-column>

@@ -16,7 +16,7 @@
             <hr class="my-3" />
             <BookingForm />
         </div>
-        <div v-else class="card-body d-flex justify-content-center align-items-center" style="min-height: 20rem;">
+        <div v-else class="card-body d-flex justify-content-center align-items-center" style="height: 80vh;">
             <p class="display-5 text-secondary">Please select a place first</p>
         </div>
     </div>

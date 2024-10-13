@@ -20,5 +20,22 @@ const postBooking = async (form) => {
     });
 }
 
-export { postBooking };
+const fetchBookings = async () => {
+    const snapshot = await db.collection('bookings').get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+const deleteBooking = async (id) => {
+    await db.collection('bookings').doc(id).delete();
+};
+
+const saveBooking = async (booking) => {
+    if (booking.id) {
+        await db.collection('bookings').doc(booking.id).update(booking);
+    } else {
+        await db.collection('bookings').add(booking);
+    }
+};
+
+export { postBooking, fetchBookings, deleteBooking, saveBooking };
 

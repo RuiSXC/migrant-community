@@ -37,17 +37,6 @@
                       </RouterLink>
                     </p>
                   </div>
-                  <div class="divider d-flex align-items-center my-3">
-                    <p class="text-center text-secondary mx-3 mb-0">or</p>
-                  </div>
-                  <div class="col-12">
-                    <div class="d-grid">
-                      <button type="button" class="btn btn-outline-secondary btn-lg">
-                        <i class="bi bi-google"></i>
-                        Log in with Google
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </form>
             </div>

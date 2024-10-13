@@ -63,7 +63,10 @@ const currentUser = ref(null);
 // 获取用户数据
 const updateUsers = async () => {
     fetchUsers()
-        .then((data) => (users.value = data))
+        .then((data) => {
+            console.log(data)
+            users.value = data
+        })
         .catch((error) => ElMessage.error(error.message));
 };
 
@@ -116,7 +119,7 @@ const sendEMessage = () => {
 
         sendMessage({
             email: emails,
-            subject: 'New message',
+            subject: 'New message from Migrant Comunity',
             message: message.value,
         });
 
