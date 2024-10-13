@@ -45,11 +45,6 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-        <div v-if="errorMessage" class="alert alert-danger mt-3">
-          {{ errorMessage }}
-        </div>
-      </div>
     </div>
   </section>
 </template>
@@ -57,24 +52,22 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useRouter } from "vue-router"
+import { ElMessage } from 'element-plus';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
 const router = useRouter()
 const email = ref('');
 const password = ref('');
-const errorMessage = ref('')
 
-watch([email, password], () => errorMessage.value = "")
 
 const handleRegister = () => {
-  errorMessage.value = '';
   authStore
     .register(email.value, password.value)
     .then(() => {
-      alert('Congratulations, your account has been created!');
+      ElMessage.success('Congratulations, your account has been created!');
       router.push({ name: 'login' })
     })
-    .catch((error) => errorMessage.value = error.message);
+    .catch((error) => ElMessage.error(error.message));
 };
 </script>

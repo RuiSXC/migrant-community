@@ -39,6 +39,7 @@
 
 <script setup>
 import { ref, onMounted, defineProps, watch } from 'vue';
+import { ElMessage } from 'element-plus';
 import { useAuthStore } from '@/stores/auth';
 import { fetchComments, postComment } from '@/stores/comment';
 
@@ -78,9 +79,7 @@ const submitComment = async () => {
             newRating.value = 0;
             updateComments(props.placeId);
         })
-        .catch((error) => {
-            alert(error);
-        });
+        .catch(error => ElMessage.error(error.message));
 }
 </script>
 
