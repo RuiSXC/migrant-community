@@ -4,6 +4,7 @@ import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
 import Restaurant from '@/views/Restaurant.vue';
+import Reservation from '@/views/Reservation.vue';
 import SafetyInsight from '@/views/SafetyInsight.vue';
 
 const routes = [
@@ -29,6 +30,12 @@ const routes = [
     path: '/restaurant',
     name: 'restaurant',
     component: Restaurant,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/reservation',
+    name: 'reservation',
+    component: Reservation,
     meta: { requiresAuth: true }
   },
   {

@@ -18,6 +18,9 @@
                   <li class="nav-item">
                     <router-link :to="{ name: 'safety-insight' }" class="nav-link">Safety Insight</router-link>
                   </li>
+                  <li class="nav-item">
+                      <router-link :to="{ name: 'reservation' }" class="nav-link">Reservation</router-link>
+                  </li>
               </ul>
               <button @click="handleLogout" class="nav-link">Logout</button>
           </div>
