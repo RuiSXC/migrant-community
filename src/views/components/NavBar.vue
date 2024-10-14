@@ -24,11 +24,11 @@
                   <li class="nav-item">
                       <router-link :to="{ name: 'immigration' }" class="nav-link">Immigration</router-link>
                   </li>
-                  <li v-if="user.role === 'admin'" class="nav-item">
+                  <li v-if="user?.role === 'admin'" class="nav-item">
                       <router-link :to="{ name: 'admin' }" class="nav-link">Admin</router-link>
                   </li>
               </ul>
-              <button @click="handleLogout" class="nav-link">Logout</button>
+              <button v-if="user" @click="handleLogout" class="nav-link">Logout</button>
           </div>
       </div>
   </nav>
